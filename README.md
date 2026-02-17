@@ -1,7 +1,6 @@
 # 🧠 Zero to Hero: Arquitecturas Agénticas
 
 > **Stack**: TypeScript + Node.js (Backend/CLI) · React (Frontend) · Java/Spring AI (Enterprise)
-> **Sin Python** — Todo en tu stack nativo.
 
 ---
 
