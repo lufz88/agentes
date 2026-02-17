@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: rag-agent
+  main:
+    allow-bean-definition-overriding: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 50MB
+  ai:
+    openai:
+      # Credenciales compartidas — resueltas por ProviderResolver desde PROVIDER + .env
+      api-key: ${OPENAI_API_KEY:ollama}
+      base-url: ${OPENAI_BASE_URL:http://localhost:11434/v1}
+      chat:
+        options:
+          model: ${MODEL:llama3.1}
+          temperature: 0.7
+      # Embedding usa la config compartida por defecto.
+      # RagConfig crea un bean @Primary con endpoint independiente
+      # para soportar proveedores que no ofrecen embeddings (Groq, Gemini).
+
+# Embedding separado — puede apuntar a otro endpoint (ej: Ollama local)
+app:
+  embedding:
+    base-url: ${EMBEDDING_BASE_URL:http://localhost:11434/v1}
+    api-key: ${EMBEDDING_API_KEY:ollama}
+    model: ${EMBEDDING_MODEL:nomic-embed-text}
+
+# RAG Configuration
+rag:
+  documents-path: ./documents
+  chunk-size: 800
+  chunk-overlap: 200
+
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-stacktrace: on_param
